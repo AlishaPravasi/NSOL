@@ -91,7 +91,7 @@ export default function TabLayout() {
         headerShown: useClientOnlyValue(false, true),
         tabBarStyle: { display: 'none' }, 
         headerStyle: {
-          backgroundColor: '#38b6ff', 
+          backgroundColor: '#75d481', 
         },
       }}
       tabBar={(props) => <TabBar {...props} />} // Use custom TabBar
@@ -103,7 +103,7 @@ export default function TabLayout() {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
                 <Image
-                  source={require('../../constants/transparent_blue_logo.png')} // adjust if needed
+                  source={require('../../constants/NSOLE_tab_bar.png')} // adjust if needed
                   style={{ width: '105', height: '105', resizeMode: 'contain' }}
                 />
               </View>
@@ -112,7 +112,7 @@ export default function TabLayout() {
           ),
           headerTitleAlign: 'left',
           headerStyle: {
-            backgroundColor: '#38b6ff',
+            backgroundColor: '#75d481',
           },
           tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
         }}
@@ -124,7 +124,7 @@ export default function TabLayout() {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
                 <Image
-                  source={require('../../constants/transparent_blue_logo.png')} // adjust if needed
+                  source={require('../../constants/NSOLE_tab_bar.png')} // adjust if needed
                   style={{ width: '105', height: '105', resizeMode: 'contain' }}
                 />
               </View>
@@ -133,7 +133,7 @@ export default function TabLayout() {
           ),
           headerTitleAlign: 'left',
           headerStyle: {
-            backgroundColor: '#38b6ff',
+            backgroundColor: '#75d481',
           },
           tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
         }}
@@ -145,7 +145,7 @@ export default function TabLayout() {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
                 <Image
-                  source={require('../../constants/transparent_blue_logo.png')} // adjust if needed
+                  source={require('../../constants/NSOLE_tab_bar.png')} // adjust if needed
                   style={{ width: '105', height: '105', resizeMode: 'contain' }}
                 />
               </View>
@@ -154,7 +154,7 @@ export default function TabLayout() {
           ),
           headerTitleAlign: 'left',
           headerStyle: {
-            backgroundColor: '#38b6ff',
+            backgroundColor: '#75d481',
           },
           tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
         }}
@@ -166,7 +166,7 @@ export default function TabLayout() {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
                 <Image
-                  source={require('../../constants/transparent_blue_logo.png')} // adjust if needed
+                  source={require('../../constants/NSOLE_tab_bar.png')} // adjust if needed
                   style={{ width: '105', height: '105', resizeMode: 'contain' }}
                 />
               </View>
@@ -175,7 +175,7 @@ export default function TabLayout() {
           ),
           headerTitleAlign: 'left',
           headerStyle: {
-            backgroundColor: '#38b6ff',
+            backgroundColor: '#75d481',
           },
           tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
         }}
@@ -187,7 +187,7 @@ export default function TabLayout() {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
                 <Image
-                  source={require('../../constants/transparent_blue_logo.png')} // adjust if needed
+                  source={require('../../constants/NSOLE_tab_bar.png')} // adjust if needed
                   style={{ width: '105', height: '105', resizeMode: 'contain' }}
                 />
               </View>
@@ -196,7 +196,7 @@ export default function TabLayout() {
           ),
           headerTitleAlign: 'left',
           headerStyle: {
-            backgroundColor: '#38b6ff',
+            backgroundColor: '#75d481',
           },
           tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
         }}
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#38b6ff',
+    backgroundColor: '#75d481',
     marginHorizontal: 20,
     paddingVertical: 15,
     borderRadius: 25,

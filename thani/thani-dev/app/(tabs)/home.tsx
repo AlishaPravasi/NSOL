@@ -7,10 +7,12 @@ import {
   SafeAreaView,
   Dimensions,
   ScrollView,
+  TouchableOpacity,
   ViewStyle,
 } from "react-native";
 import { Text, View } from "@/components/Themed";
 import Colors from "@/constants/Colors";
+import EventDetailsModal from "@/components/EventDetailsModal";
 import { useColorScheme } from "@/components/useColorScheme";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
@@ -32,52 +34,236 @@ export default function EventsScreen() {
   const textColor = Colors[colorScheme].text;
   const borderColor = Colors[colorScheme].tabIconDefault;
   const backgroundColor = Colors[colorScheme].background;
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   const [searchText, setSearchText] = useState("");
-  const [events, setEvents] = useState<Event[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const resp = await fetch("http://10.5.176.13:5000/api/events/");
-        const data = await resp.json();
-
-        const eventImages: Record<string, any> = {
-          "sigma chi - delta iota tabling event (derby days 2025)": require("../../assets/images/derby_days.png"),
-          "usg spring 2025 debate and townhall": require("../../assets/images/usg_election.png"),
-          "munch week all stars": require("../../assets/images/munch_week.png"),
-          "earth day concert featuring gaeya": require("../../assets/images/gaeya.png"),
-          "senior week 2025": require("../../assets/images/senior_week.png"),
-          "intro to cad": require("../../assets/images/intro_CAD.png"),
-          "laisa movie night": require("../../assets/images/laisa_movie.png"),
-          "fellowships 101: professional development workshop for staff & faculty": require("../../assets/images/fellowships.png"),
-          "sewing workshop: making lanyards & keychains": require("../../assets/images/sewing.png"),
-        };
-
-        const transformed = data.map((event: Event) => {
-          const cleanTitle = event.title.trim().toLowerCase();
-          const matchedImage = eventImages[cleanTitle];
-
-          return {
-            ...event,
-            id: event.id || `event-${Math.random().toString(36).substr(2, 9)}`,
-            image: matchedImage || require("../../assets/images/human.png"),
-          };
-        });
-
-        const uniqueEvents = transformed.filter(
-          (e, i, arr) => i === arr.findIndex((x) => x.id === e.id)
-        );
-
-        setEvents(uniqueEvents);
-
-        setEvents(uniqueEvents);
-      } catch (err) {
-        console.error("Fetch events error:", err);
-        console.error("Fetch events error:", err);
-      }
-    })();
-  }, []);
+  const [events, setEvents] = useState<Event[]>([
+    {
+      id: "event-001",
+      title: "Frisco Trail Clean-Up Day",
+      description: "Join local students and volunteers to clean up Rainbow Lake Trail and learn about native plants and erosion prevention.",
+      date: "2025-05-17",
+      location: "Rainbow Lake Trailhead, Frisco, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-002",
+      title: "Frisco HS Water Testing Workshop",
+      description: "Learn about water quality and conservation while collecting samples from Tenmile Creek.",
+      date: "2025-05-19",
+      location: "Frisco High School, Frisco, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-003",
+      title: "West HS Urban Garden Build",
+      description: "Help construct a sustainable vegetable garden and learn about urban food justice in West Denver.",
+      date: "2025-05-21",
+      location: "West High School, Denver, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-004",
+      title: "George Washington HS Tree Mapping Walk",
+      description: "Walk the campus with a local arborist to identify and map native tree species.",
+      date: "2025-05-23",
+      location: "George Washington High School, Denver, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-005",
+      title: "CHSC Environmental Film Night",
+      description: "Watch and discuss a documentary on Colorado’s forest fires and climate resilience.",
+      date: "2025-05-24",
+      location: "Colorado High School Charter, Denver, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-006",
+      title: "Denver Eco-Leadership Summit",
+      description: "An all-day summit bringing together student leaders across NSOLE chapters for workshops and idea exchange.",
+      date: "2025-05-25",
+      location: "Denver Botanic Gardens",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-007",
+      title: "Colorado River Awareness Hike",
+      description: "Family-friendly hike and teach-in about the importance of the Colorado River to our ecosystems.",
+      date: "2025-05-28",
+      location: "Chatfield State Park, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-008",
+      title: "Frisco Reuse Fair",
+      description: "Bring gently used gear, clothes, and books to exchange with the community—plus upcycling workshops!",
+      date: "2025-05-30",
+      location: "Frisco Community Center",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-009",
+      title: "Westwood Community Tree Planting",
+      description: "Partner with local residents and NSOLE volunteers to plant shade trees in the Westwood neighborhood.",
+      date: "2025-06-01",
+      location: "West Denver, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-010",
+      title: "Sustainable Art Workshop",
+      description: "Students will turn recycled materials into community art pieces while learning about waste reduction.",
+      date: "2025-06-03",
+      location: "Colorado High School Charter, Denver, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-011",
+      title: "Frisco Lake Ecology Walk",
+      description: "Guided nature walk around Dillon Reservoir with hands-on exploration of aquatic ecosystems.",
+      date: "2025-06-04",
+      location: "Frisco Bay Marina, Frisco, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-012",
+      title: "Environmental Career Panel",
+      description: "Meet professionals working in sustainability, conservation, and green tech. Open Q&A afterward.",
+      date: "2025-06-05",
+      location: "George Washington High School, Denver, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-013",
+      title: "Zero Waste Picnic & Cleanup",
+      description: "Bring your own containers, enjoy an eco-friendly lunch, and join a trash pickup afterward!",
+      date: "2025-06-06",
+      location: "City Park, Denver, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-014",
+      title: "CHSC Rooftop Garden Tour",
+      description: "Learn how students are turning rooftops into green, edible spaces—and how you can do the same.",
+      date: "2025-06-08",
+      location: "Colorado High School Charter, Denver, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-015",
+      title: "Youth Climate Action Hackathon",
+      description: "Collaborate to design solutions to local climate challenges. Open to middle and high schoolers.",
+      date: "2025-06-10",
+      location: "Denver Central Library",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-016",
+      title: "Solar 101: Student Workshop",
+      description: "Interactive demo on how solar panels work—plus build your own mini-solar lantern!",
+      date: "2025-06-11",
+      location: "Frisco High School, Frisco, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-017",
+      title: "Pollinator Garden Planting Day",
+      description: "Join the effort to plant a pollinator garden that supports bees and butterflies in the city.",
+      date: "2025-06-12",
+      location: "West High School, Denver, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-018",
+      title: "Green Leaders Recognition Picnic",
+      description: "Celebrate outstanding environmental work by NSOLE chapters with food, awards, and games.",
+      date: "2025-06-14",
+      location: "Ruby Hill Park, Denver, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-019",
+      title: "Bike to Nature Challenge",
+      description: "Students log miles biking to local parks, promoting fitness and emissions-free travel.",
+      date: "2025-06-15",
+      location: "Denver Metro Parks",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-020",
+      title: "Frisco Outdoor Skills Camp",
+      description: "One-day workshop for middle schoolers to learn orienteering, Leave No Trace, and basic survival skills.",
+      date: "2025-06-16",
+      location: "Walter Byron Park, Frisco, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-021",
+      title: "Eco-Entrepreneurship Pitch Night",
+      description: "Student teams present green business ideas to a panel of community leaders.",
+      date: "2025-06-18",
+      location: "George Washington High School, Denver, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-022",
+      title: "Wetlands Exploration Day",
+      description: "Hands-on activities to learn about the role of wetlands in flood control and biodiversity.",
+      date: "2025-06-20",
+      location: "Platte River Wetlands, Denver, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-023",
+      title: "CHSC Upcycle Fashion Show",
+      description: "Students design and model outfits made from recycled materials to raise awareness on textile waste.",
+      date: "2025-06-21",
+      location: "Colorado High School Charter, Denver, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-024",
+      title: "Solar Cook-Off",
+      description: "Use DIY solar ovens to cook food using only sunlight—prizes for most creative dishes!",
+      date: "2025-06-23",
+      location: "Frisco Middle School, Frisco, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-025",
+      title: "Plastic-Free July Kickoff Rally",
+      description: "Launch your commitment to a plastic-free month with local speakers and sustainability kits.",
+      date: "2025-06-30",
+      location: "Civic Center Park, Denver, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-026",
+      title: "West HS Rain Barrel Build",
+      description: "Learn water conservation and help install rain barrels to support the school's garden.",
+      date: "2025-07-01",
+      location: "West High School, Denver, CO",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-027",
+      title: "Frisco Forest Bathing Walk",
+      description: "A mindful nature immersion experience designed to reduce stress and reconnect students with the outdoors.",
+      date: "2025-07-03",
+      location: "Frisco Peninsula Recreation Area",
+      image: require("../../assets/images/human.png"),
+    },
+    {
+      id: "event-028",
+      title: "Climate Justice Mural Project",
+      description: "Paint a mural with your chapter that highlights community resilience and environmental justice.",
+      date: "2025-07-05",
+      location: "George Washington High School, Denver, CO",
+      image: require("../../assets/images/human.png"),
+    },
+        
+  ]);
 
   const filtered = useMemo(
     () =>
@@ -93,6 +279,7 @@ export default function EventsScreen() {
   );
 
   const renderHorizontal = ({ item }: { item: Event }) => (
+    <TouchableOpacity onPress={() => setSelectedEvent(item)}>
     <View
       style={[
         styles.card,
@@ -116,8 +303,15 @@ export default function EventsScreen() {
       />
       <Text style={[styles.eventTitle, { color: textColor }]} numberOfLines={2}>
         {item.title}
+      </Text> 
+      <Text style={[styles.eventDetails, { color: placeholderColor, textAlign: "center" }]}>
+        {item.date}
+      </Text>
+      <Text style={[styles.eventDetails, { color: placeholderColor, textAlign: "center" }]}>
+        {item.location}
       </Text>
     </View>
+    </TouchableOpacity>
   );
 
   const renderVertical = ({ item }: { item: Event }) => {
@@ -127,6 +321,7 @@ export default function EventsScreen() {
         : item.description;
 
     return (
+    <TouchableOpacity onPress={() => setSelectedEvent(item)}>
       <View style={[styles.card, { borderColor }]}>
         <Image
           source={item.image}
@@ -153,12 +348,16 @@ export default function EventsScreen() {
           {item.date} @ {item.location}
         </Text>
       </View>
+    </TouchableOpacity>
     );
   };
 
   // 🚀 RETURN your UI here:
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor }}>
+      {selectedEvent && (
+  <EventDetailsModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+)}
       <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
         <View style={styles.container}>
           <TextInput
@@ -170,7 +369,7 @@ export default function EventsScreen() {
           />
 
           <Text style={[styles.sectionTitle, { color: textColor }]}>
-            🎵 Playlist Events
+            📅 Upcoming Events
           </Text>
 
           <FlatList
@@ -185,7 +384,7 @@ export default function EventsScreen() {
           <Text
             style={[styles.sectionTitle, { color: textColor, marginTop: 20 }]}
           >
-            📅 Upcoming Events
+            🦚 More Events
           </Text>
 
           <FlatList

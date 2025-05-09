@@ -13,7 +13,7 @@ import { useColorScheme } from "@/components/useColorScheme";
 import ForumPosts from "@/components/ForumPage";
 
 // Static blue for close button
-const thaniBlue = "#38b6ff";
+const thaniBlue = "#75d481";
 
 interface Forum {
   id: string;

@@ -1,6 +1,6 @@
 const tintColorLight = '#ffff';
 const tintColorDark = '#0000';
-const thaniBlue = '#38b6ff';
+const thaniBlue = '#75d481';
 
 export default {
   light: {

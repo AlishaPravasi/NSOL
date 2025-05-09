@@ -119,7 +119,7 @@ export default function MapController() {
 
         {places.map((place, index) => (
           <Marker
-            pinColor='#38b6ff'
+            pinColor='#75d481'
             key={index}
             coordinate={{
               latitude: place.geometry.location.lat,
@@ -128,7 +128,7 @@ export default function MapController() {
             title={place.name}
             description={place.vicinity}
             onPress={() => setSelectedPlace(place)}
-            pinColor={selectedPlace?.place_id === place.place_id ? '#000' : '#38b6ff'}
+            pinColor={selectedPlace?.place_id === place.place_id ? '#000' : '#75d481'}
           />
         ))}
       </MapView>
