@@ -1,0 +1,8 @@
+fastapi[standard]
+SQLAlchemy
+psycopg2-binary
+pgvector
+openai
+python-dotenv
+requests
+icalendar
