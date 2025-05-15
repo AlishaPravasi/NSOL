@@ -402,7 +402,7 @@ export default function EventsScreen() {
   onPress={() => setIsAddModalVisible(true)}
   style={{
     position: "absolute",
-    bottom: 120, // 👈 was 30 before, now pushed up above tab bar
+    bottom: 120, 
     right: 30,
     backgroundColor: "#75d481",
     borderRadius: 30,

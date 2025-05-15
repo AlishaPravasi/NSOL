@@ -19,7 +19,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
 
   const icons: Record<string, (props: { color: string }) => JSX.Element> = {
     home: (props) => <AntDesign name="home" size={26} {...props} />,
-    events: (props) => <Feather name="calendar" size={26} {...props} />,
+    jobs: (props) => <Feather name="briefcase" size={26} {...props} />,
     forum: (props) => <FontAwesome name="comments" size={26} {...props} />,
     map: (props) => <FontAwesome name="map" size={26} {...props} />,
     profile: (props) => <FontAwesome name="user" size={26} {...props} />,
@@ -104,7 +104,7 @@ export default function TabLayout() {
               <View style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
                 <Image
                   source={require('../../constants/NSOLE_tab_bar.png')} // adjust if needed
-                  style={{ width: '105', height: '105', resizeMode: 'contain' }}
+                  style={{ width: '60', height: '60', resizeMode: 'contain' }}
                 />
               </View>
               <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 25 , fontFamily: 'Poppins'}}>Home</Text>
@@ -118,24 +118,25 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="events"
+        name="jobs"
         options={{
           headerTitle: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
                 <Image
                   source={require('../../constants/NSOLE_tab_bar.png')} // adjust if needed
-                  style={{ width: '105', height: '105', resizeMode: 'contain' }}
+                  style={{ width: '60', height: '60', resizeMode: 'contain' }}
                 />
               </View>
-              <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 25,fontFamily: 'Poppins', }}>Events</Text>
+              <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 25,fontFamily: 'Poppins', }}>Jobs</Text>
             </View>
           ),
           headerTitleAlign: 'left',
           headerStyle: {
             backgroundColor: '#75d481',
           },
-          tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
+          title: 'Jobs',
+          tabBarIcon: ({ color }) => <TabBarIcon name="briefcase" color={color} />,
         }}
       />
       <Tabs.Screen
@@ -146,7 +147,7 @@ export default function TabLayout() {
               <View style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
                 <Image
                   source={require('../../constants/NSOLE_tab_bar.png')} // adjust if needed
-                  style={{ width: '105', height: '105', resizeMode: 'contain' }}
+                  style={{ width: '60', height: '60', resizeMode: 'contain' }}
                 />
               </View>
               <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 25 , fontFamily: 'Poppins',}}>Forum</Text>
@@ -167,7 +168,7 @@ export default function TabLayout() {
               <View style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
                 <Image
                   source={require('../../constants/NSOLE_tab_bar.png')} // adjust if needed
-                  style={{ width: '105', height: '105', resizeMode: 'contain' }}
+                  style={{ width: '60', height: '60', resizeMode: 'contain' }}
                 />
               </View>
               <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 25, fontFamily: 'Poppins' }}>Map</Text>
@@ -188,7 +189,7 @@ export default function TabLayout() {
               <View style={{ width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
                 <Image
                   source={require('../../constants/NSOLE_tab_bar.png')} // adjust if needed
-                  style={{ width: '105', height: '105', resizeMode: 'contain' }}
+                  style={{ width: '60', height: '60', resizeMode: 'contain' }}
                 />
               </View>
               <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 25, fontFamily: 'Poppins' }}>Profile</Text>

@@ -17,6 +17,8 @@ export default function MapController() {
     return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${apiKey}`;
   };
   const knownTypes = [
+    'park',
+    'trail',
     'restaurant',
     'cafe',
     'bar',
@@ -43,9 +45,9 @@ export default function MapController() {
   }, []);
 
   const fetchNearbyPlaces = async (keyword: string) => {
-    const latitude = 39.6780;
-    const longitude = -104.9614;
-    const radius = 1500; // meters
+    const latitude = 39.7295;
+    const longitude = -104.9942;    
+    const radius = 2000; // meters
     const apiKey = 'AIzaSyBuQZm9NDoMj1KJgRHiJaJGmfaWOvsGRAY'; 
 
     let url = '';
@@ -100,8 +102,8 @@ export default function MapController() {
         style={styles.map}
         provider={PROVIDER_DEFAULT}
         initialRegion={{
-          latitude: 39.6780,
-          longitude: -104.9614,
+          latitude: 39.7295,
+          longitude: -104.9942,       
           latitudeDelta: 0.01,
           longitudeDelta: 0.01,
         }}
