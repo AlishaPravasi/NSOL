@@ -36,9 +36,9 @@ export default function MapController() {
     'gyms',
     'schools',
     'hospitals',
-    'parks'
+    'parks',
+    'trails'
   ];
-  
 
   useEffect(() => {
     fetchNearbyPlaces('');
@@ -46,19 +46,19 @@ export default function MapController() {
 
   const fetchNearbyPlaces = async (keyword: string) => {
     const latitude = 39.7295;
-    const longitude = -104.9942;    
-    const radius = 2000; // meters
-    const apiKey = 'AIzaSyBuQZm9NDoMj1KJgRHiJaJGmfaWOvsGRAY'; 
-
+    const longitude = -104.9942;
+    const radius = 1500;
+    const apiKey = 'AIzaSyBuQZm9NDoMj1KJgRHiJaJGmfaWOvsGRAY';
+  
     let url = '';
-
+  
     if (knownTypes.includes(keyword.toLowerCase())) {
       const type = keyword.toLowerCase();
       url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&type=${type}&key=${apiKey}`;
     } else {
       url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&keyword=${encodeURIComponent(keyword)}&key=${apiKey}`;
     }
-  
+
     try {
       const response = await axios.get(url);
       setPlaces(response.data.results || []);
@@ -66,7 +66,7 @@ export default function MapController() {
       console.error('Error fetching places:', err);
       setError(err);
     }
-  };
+  };  
 
   return (
     <View style={styles.container}>
@@ -83,7 +83,7 @@ export default function MapController() {
         {searchQuery.length > 0 && (
           <Text style={styles.clearButton} onPress={() => {
             setSearchQuery('');
-            fetchNearbyPlaces(); // Reload default (restaurants)
+            fetchNearbyPlaces(); 
           }}>
             X
           </Text>
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 10,
     top: '90%',
-    transform: [{ translateY: -10 }],
+    transform: [{ translateY: -12 }],
     fontSize: 18,
   },  
   map: { width: Dimensions.get('window').width, height: Dimensions.get('window').height },

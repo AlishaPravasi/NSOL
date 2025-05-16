@@ -4,6 +4,11 @@ import { View } from "./Themed";
 import { useColorScheme } from "@/components/useColorScheme";
 import Colors from "@/constants/Colors";
 import Post from "./Post";
+import { useState } from "react";
+
+type ForumPostsProps = {
+  forum: string;
+};
 
 type PostType = {
   id: string;
@@ -11,133 +16,140 @@ type PostType = {
   content: string;
   timestamp?: string;
   image: any;
+  liked?: boolean;
+  pinned?: boolean;
+  comments?: string[]; // Can be expanded to full objects later
 };
 
-const dummyPosts: PostType[] = [
+const conservationistPosts: PostType[] = [
   {
     id: "1",
-    author: "Alice",
-    content: "Just joined this forum, excited to meet everyone!",
-    timestamp: "2m ago",
+    author: "Leo",
+    content: "Great meetup today, thanks Conservationists Club for hosting 🙌",
+    timestamp: "4h ago",
     image: require("../assets/images/pfp.jpg"),
+    likeCount: 0,
   },
   {
     id: "2",
-    author: "Bob",
-    content:
-      "Anyone here interested in mobile app development? I'm starting a study group for React Native.",
-    timestamp: "5m ago",
+    author: "Diego",
+    content: "New conservation volunteering opportunity posted by Denver Parks & Rec!",
+    timestamp: "25m ago",
     image: require("../assets/images/pfp.jpg"),
+    likeCount: 0,
   },
   {
     id: "3",
-    author: "Charlie",
-    content:
-      "I love React Native! What are your favorite libraries? I'm currently exploring Redux and React Navigation.",
-    timestamp: "15m ago",
+    author: "Elena",
+    content: "Helped clean up Bear Creek this weekend—feeling proud 🌱",
+    timestamp: "1d ago",
     image: require("../assets/images/pfp.jpg"),
-  },
-  {
-    id: "4",
-    author: "David",
-    content:
-      "Has anyone taken the Advanced Algorithms course? Looking for study partners.",
-    timestamp: "30m ago",
-    image: require("../assets/images/pfp.jpg"),
-  },
-  {
-    id: "5",
-    author: "Eva",
-    content:
-      "Working on a machine learning project. Need help with TensorFlow implementation.",
-    timestamp: "45m ago",
-    image: require("../assets/images/pfp.jpg"),
-  },
-  {
-    id: "6",
-    author: "Frank",
-    content:
-      "Just finished my internship at Google. Happy to share my experience and tips for interviews!",
-    timestamp: "1h ago",
-    image: require("../assets/images/pfp.jpg"),
-  },
-  {
-    id: "7",
-    author: "Grace",
-    content:
-      "Starting a weekend hackathon team. Need 3 more people. DM if interested!",
-    timestamp: "2h ago",
-    image: require("../assets/images/pfp.jpg"),
-  },
-  {
-    id: "8",
-    author: "Henry",
-    content:
-      "Found this amazing YouTube channel for learning system design. Link in the comments!",
-    timestamp: "3h ago",
-    image: require("../assets/images/pfp.jpg"),
-  },
-  {
-    id: "9",
-    author: "Ivy",
-    content:
-      "Anyone else struggling with TypeScript generics? Let's discuss some practical examples.",
-    timestamp: "4h ago",
-    image: require("../assets/images/pfp.jpg"),
-  },
-  {
-    id: "10",
-    author: "Jack",
-    content:
-      "Created a GitHub repo with useful CS fundamentals cheat sheets. Check it out!",
-    timestamp: "5h ago",
-    image: require("../assets/images/pfp.jpg"),
-  },
-  {
-    id: "11",
-    author: "Kelly",
-    content:
-      "Looking for feedback on my portfolio website. Any UI/UX suggestions welcome!",
-    timestamp: "6h ago",
-    image: require("../assets/images/pfp.jpg"),
-  },
-  {
-    id: "12",
-    author: "Liam",
-    content:
-      "Just deployed my first full-stack app on AWS. The documentation is massive!",
-    timestamp: "7h ago",
-    image: require("../assets/images/pfp.jpg"),
-  },
-  {
-    id: "13",
-    author: "Maya",
-    content:
-      "Anyone using Next.js 13? The app directory feature is game-changing!",
-    timestamp: "8h ago",
-    image: require("../assets/images/pfp.jpg"),
-  },
-  {
-    id: "14",
-    author: "Noah",
-    content:
-      "Organizing a tech talk on Blockchain Development next week. Who's in?",
-    timestamp: "9h ago",
-    image: require("../assets/images/pfp.jpg"),
-  },
-  {
-    id: "15",
-    author: "Olivia",
-    content:
-      "Found a bug in the university's course registration system. Time to practice some ethical hacking!",
-    timestamp: "10h ago",
-    image: require("../assets/images/pfp.jpg"),
+    likeCount: 0,
   },
 ];
 
-export default function ForumPosts() {
-  const colorScheme = useColorScheme() || "light";
+const birdWatcherPosts: PostType[] = [
+  {
+    id: "4",
+    author: "Jamal",
+    content: "Can someone ID this bird I spotted near Sloan’s Lake? (pic below)",
+    timestamp: "2h ago",
+    image: require("../assets/images/pfp.jpg"),
+    likeCount: 0,
+  },
+  {
+    id: "5",
+    author: "Sofia",
+    content: "Saw a bald eagle at Washington Park today! 🦅",
+    timestamp: "10m ago",
+    image: require("../assets/images/pfp.jpg"),
+    likeCount: 0,
+  },
+  {
+    id: "6",
+    author: "Mina",
+    content: "Anyone going to the bird migration watch event tomorrow?",
+    timestamp: "3h ago",
+    image: require("../assets/images/pfp.jpg"),
+    likeCount: 0,
+  },
+];
 
+const hikingBikingPosts: PostType[] = [
+  {
+    id: "7",
+    author: "Aria",
+    content: "Anyone want to do the Cherry Creek Trail on Saturday? 🚲",
+    timestamp: "1h ago",
+    image: require("../assets/images/pfp.jpg"),
+    likeCount: 0,
+  },
+  {
+    id: "8",
+    author: "Tasha",
+    content: "Looking to start a weekly bike group—intermediate level riders welcome!",
+    timestamp: "3h ago",
+    image: require("../assets/images/pfp.jpg"),
+    likeCount: 0,
+  },
+  {
+    id: "9",
+    author: "Rohan",
+    content: "What’s the best scenic route for beginners near Red Rocks?",
+    timestamp: "2d ago",
+    image: require("../assets/images/pfp.jpg"),
+    likeCount: 0,
+  },
+];
+
+export default function ForumPosts({ forum }: { forum: string }) {
+  const colorScheme = useColorScheme() || "light";
+  const normalizedForum = forum.toLowerCase();
+  
+  const posts =
+  normalizedForum.includes("conservation") ? conservationistPosts :
+  normalizedForum.includes("bird") ? birdWatcherPosts :
+  hikingBikingPosts;
+
+  const [postState, setPostState] = useState<PostType[]>(
+    [...posts].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0))
+  );
+  
+  const toggleLike = (id: string) => {
+    setPostState((prev) =>
+      prev.map((post) =>
+        post.id === id
+          ? {
+              ...post,
+              liked: !post.liked,
+              likeCount: post.liked
+                ? Math.max(0, (post.likeCount || 1) - 1)
+                : (post.likeCount || 0) + 1,
+            }
+          : post
+      )
+    );
+  };  
+  
+  const togglePin = (id: string) => {
+    setPostState((prev) => {
+      const updated = prev.map((post) =>
+        post.id === id ? { ...post, pinned: !post.pinned } : post
+      );
+      return [...updated].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+    });
+  };  
+  
+  const addComment = (id: string, comment: string) => {
+    setPostState((prev) =>
+      prev.map((post) =>
+        post.id === id
+          ? { ...post, comments: [...(post.comments || []), comment] }
+          : post
+      )
+    );
+  };
+  
   return (
     <View
       style={[
@@ -146,7 +158,7 @@ export default function ForumPosts() {
       ]}
     >
       <FlatList
-        data={dummyPosts}
+        data={posts}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContent}
         renderItem={({ item }) => (
@@ -155,6 +167,12 @@ export default function ForumPosts() {
             content={item.content}
             timestamp={item.timestamp}
             image={item.image}
+            liked={item.liked}
+            likeCount={item.likeCount}
+            pinned={item.pinned}
+            onLike={() => toggleLike(item.id)}
+            onPin={() => togglePin(item.id)}
+            onComment={(comment: string) => addComment(item.id, comment)}
           />
         )}
       />
@@ -164,6 +182,7 @@ export default function ForumPosts() {
 
 const styles = StyleSheet.create({
   container: {
+    paddingBottom: 20, // Extra space so it's not hidden behind the tab bar
     flex: 1,
   },
   listContent: {

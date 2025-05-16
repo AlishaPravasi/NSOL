@@ -14,7 +14,7 @@ import { Text } from '@/components/Themed';
 import { useRouter, Stack } from 'expo-router';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
-import Logo from '@/constants/regular_NSOLE_logo.png';
+import Logo from '@/constants/NSOLE_Login_Logo.png';
 
 export default function LoginScreen() {
   const colorScheme = useColorScheme() || 'light';
@@ -73,6 +73,8 @@ export default function LoginScreen() {
       >
         <Image source={Logo} style={styles.logo} />
         <Text style={[styles.title, { color: '#169d53'  }]}>Welcome Back</Text>
+        <Text style={styles.betaText}>Beta Version</Text>
+        <Text style={styles.disclaimerText}>*Swipe Left to Right to Bypass the Login Screen!*</Text>
         <TextInput
           style={[
             styles.input,
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins',
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 40,
+    marginBottom: 20,
     color: '#169d53'
   },
   input: {
@@ -158,4 +160,19 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  betaText: {
+    fontFamily: 'Poppins',
+    fontSize: 15,
+    fontStyle: 'italic',
+    color: '#169d53',
+    marginBottom: 10,
+  },  
+  disclaimerText: {
+    fontFamily: 'Poppins',
+    fontSize: 15,
+    fontStyle: 'italic',
+    color: '#999',
+    marginBottom: 10,
+    textAlign: 'center', 
+  },  
 });

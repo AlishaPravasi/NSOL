@@ -20,7 +20,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   const icons: Record<string, (props: { color: string }) => JSX.Element> = {
     home: (props) => <AntDesign name="home" size={26} {...props} />,
     jobs: (props) => <Feather name="briefcase" size={26} {...props} />,
-    forum: (props) => <FontAwesome name="comments" size={26} {...props} />,
+    forum: (props) => <FontAwesome name="trophy" size={26} {...props} />,
     map: (props) => <FontAwesome name="map" size={26} {...props} />,
     profile: (props) => <FontAwesome name="user" size={26} {...props} />,
   };
@@ -157,7 +157,8 @@ export default function TabLayout() {
           headerStyle: {
             backgroundColor: '#75d481',
           },
-          tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
+          title: 'Leaderboard',
+          tabBarIcon: ({ color }) => <FontAwesome name="trophy" size={26} color={color} />,
         }}
       />
       <Tabs.Screen

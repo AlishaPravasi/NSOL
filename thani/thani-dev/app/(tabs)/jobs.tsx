@@ -93,10 +93,11 @@ export default function JobsScreen() {
         (j) =>
           j.title.toLowerCase().includes(searchText.toLowerCase()) ||
           j.company.toLowerCase().includes(searchText.toLowerCase()) ||
-          j.description.toLowerCase().includes(searchText.toLowerCase()) ||sx
+          j.description.toLowerCase().includes(searchText.toLowerCase())
       ),
     [searchText, jobs]
   );
+  
 
   const renderItem = ({ item }: { item: Job }) => (
     <View style={[styles.card, { borderColor }]}>
